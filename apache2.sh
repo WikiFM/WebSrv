@@ -1,5 +1,7 @@
 #!/bin/bash
 
+bindfs -m www-data --create-with-perms=666 /srv/ /var/www/
+
 openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
 openssl rsa -passin pass:x -in server.pass.key -out /etc/ssl/private/apache.key
 rm server.pass.key
