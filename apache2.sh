@@ -1,6 +1,8 @@
 #!/bin/bash
 
-bindfs -m www-data --create-with-perms=666 /srv/ /var/www/
+[[ "$UID" == "" ]] && UID=1000
+[[ "$GID" == "" ]] && GID=1000
+bindfs -m www-data --create-for-user=$UID --create-for-group=$GID /srv/ /var/www/
 
 openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
 openssl rsa -passin pass:x -in server.pass.key -out /etc/ssl/private/apache.key
