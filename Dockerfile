@@ -18,8 +18,8 @@ RUN /bin/chmod +x /root/initDocker.sh
 RUN /root/initDocker.sh
 RUN rm /root/initDocker.sh
 
-ADD ./apache2/common/wikitolearn.conf /etc/apache2/common/wikitolearn.conf
-ADD ./apache2/common/www.wikitolearn.org.conf /etc/apache2/common/www.wikitolearn.org.conf
+ADD ./apache2/common/WikiToLearn.conf /etc/apache2/common/WikiToLearn.conf
+ADD ./apache2/common/www.WikiToLearn.org.conf /etc/apache2/common/www.WikiToLearn.org.conf
 ADD ./apache2/common/ssl.conf /etc/apache2/common/ssl.conf
 ADD ./apache2/mods-enabled/fastcgi.conf /etc/apache2/mods-enabled/fastcgi.conf
 ADD ./apache2/sites-available/fr.wikitolearn.org.conf /etc/apache2/sites-available/fr.wikitolearn.org.conf
