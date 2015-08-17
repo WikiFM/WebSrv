@@ -31,6 +31,7 @@ ADD ./apache2/sites-available/es.wikitolearn.org.conf /etc/apache2/sites-availab
 ADD ./apache2/sites-available/000-wikitolearn.org.conf /etc/apache2/sites-available/000-wikitolearn.org.conf
 ADD ./apache2/sites-available/en.wikitolearn.org.conf /etc/apache2/sites-available/en.wikitolearn.org.conf
 ADD ./apache2/sites-available/aliases.conf /etc/apache2/sites-available/aliases.conf
+ADD ./apache2/sites-available/pt.wikitolearn.org.conf /etc/apache2/sites-available/pt.wikitolearn.org.conf
 
 RUN /bin/chmod +x /root/abilita_sites.sh
 RUN /root/abilita_sites.sh
