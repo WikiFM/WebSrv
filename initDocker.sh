@@ -15,3 +15,5 @@ mv composer.phar /usr/bin/composer
 
 chmod +x /root/apache2.sh
 chmod +x /root/php5-fpm.sh
+
+rm -f /var/cache/apt/archives/*deb
