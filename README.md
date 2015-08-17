@@ -1,26 +1,26 @@
 # WebSrv
-To add a language or a vh you must to add in apache2/sites-available/ dir a file named "[langcode].wikifm.org.conf" and add to abilita_sites.sh file a line "a2ensite [langcode].wikifm.org.conf"
-###### Example content for "[langcode].wikifm.org.conf" is:
+To add a language or a vh you must to add in apache2/sites-available/ dir a file named "[langcode].wikitolearn.org.conf" and add to abilita_sites.sh file a line "a2ensite [langcode].wikitolearn.org.conf"
+###### Example content for "[langcode].wikitolearn.org.conf" is:
 ```
 <VirtualHost *:80>
 	ServerAdmin  webmaster@kde.org
-	ServerName   [langcode].wikifm.org
-	ServerAlias  [langcode].direct.wikifm.org
+	ServerName   [langcode].wikitolearn.org
+	ServerAlias  [langcode].direct.wikitolearn.org
 
-	ErrorLog ${APACHE_LOG_DIR}/[langcode].wikifm.org-error.log
-	CustomLog ${APACHE_LOG_DIR}/[langcode].wikifm.org.log combined
+	ErrorLog ${APACHE_LOG_DIR}/[langcode].wikitolearn.org-error.log
+	CustomLog ${APACHE_LOG_DIR}/[langcode].wikitolearn.org.log combined
 
-	Include /etc/apache2/common/WikiFM.conf
+	Include /etc/apache2/common/wikitolearn.conf
 </VirtualHost>
 <VirtualHost *:443>
         ServerAdmin  webmaster@kde.org
-        ServerName   [langcode].wikifm.org
-        ServerAlias  [langcode].direct.wikifm.org
+        ServerName   [langcode].wikitolearn.org
+        ServerAlias  [langcode].direct.wikitolearn.org
 
-        ErrorLog ${APACHE_LOG_DIR}/[langcode].wikifm.org-error.log
-        CustomLog ${APACHE_LOG_DIR}/[langcode].wikifm.org.log combined
+        ErrorLog ${APACHE_LOG_DIR}/[langcode].wikitolearn.org-error.log
+        CustomLog ${APACHE_LOG_DIR}/[langcode].wikitolearn.org.log combined
 
-        Include /etc/apache2/common/WikiFM.conf
+        Include /etc/apache2/common/wikitolearn.conf
         Include /etc/apache2/common/ssl.conf   
 </VirtualHost>
 ```
