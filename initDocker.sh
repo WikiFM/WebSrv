@@ -2,7 +2,7 @@
 apt-get update
 apt-get -y install apt-utils curl
 apt-get -y install ocaml-nox
-apt-get -y install apache2 php5-fpm libapache2-mod-fastcgi supervisor git php5-apcu php5-mysql bindfs build-essential ssmtp
+apt-get -y install apache2 php5-fpm libapache2-mod-fastcgi supervisor git php5-apcu php5-mysql bindfs build-essential ssmtp imagemagick
 apt-get clean
 a2enmod rewrite ssl actions
 rm /var/www/* -Rf
