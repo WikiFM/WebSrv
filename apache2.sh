@@ -4,7 +4,16 @@
 [[ "$GID" == "" ]] && GID=1000
 bindfs -m www-data --create-for-user=$UID --create-for-group=$GID /srv/ /var/www/
 
-if [[ ! -f /etc/ssl/private/apache.key ]] || [[ ! -f /etc/ssl/certs/apache.crt ]] ; then
+if [ -f /certs/websrv.crt ] ; then
+ echo "Copy /certs/websrv.crt"
+ cp /certs/websrv.crt /etc/ssl/certs/apache.crt
+fi
+if [ -f /certs/websrv.key ] ; then
+ echo "Copy /certs/websrv.key"
+ cp /certs/websrv.key /etc/ssl/private/apache.key
+fi
+
+if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  rm -f /etc/ssl/private/apache.key
  rm -f /etc/ssl/certs/apache.crt
 
