@@ -31,7 +31,6 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 RUN chmod +x /root/apache2.sh
 RUN chmod +x /root/php5-fpm.sh
-RUN rm -f /var/cache/apt/archives/*deb
 
 ADD ./apache2/common/WikiToLearn.conf /etc/apache2/common/WikiToLearn.conf
 ADD ./apache2/common/www.WikiToLearn.org.conf /etc/apache2/common/www.WikiToLearn.org.conf
@@ -47,6 +46,7 @@ ADD ./apache2/sites-available/000-wikitolearn.org.conf /etc/apache2/sites-availa
 ADD ./apache2/sites-available/en.wikitolearn.org.conf /etc/apache2/sites-available/en.wikitolearn.org.conf
 ADD ./apache2/sites-available/aliases.conf /etc/apache2/sites-available/aliases.conf
 ADD ./apache2/sites-available/pt.wikitolearn.org.conf /etc/apache2/sites-available/pt.wikitolearn.org.conf
+ADD ./apache2/sites-available/sv.wikitolearn.org.conf /etc/apache2/sites-available/sv.wikitolearn.org.conf
 
 RUN a2ensite 000-wikitolearn.org.conf
 RUN a2ensite de.wikitolearn.org.conf
@@ -57,6 +57,7 @@ RUN a2ensite it.wikitolearn.org.conf
 RUN a2ensite pool.wikitolearn.org.conf
 RUN a2ensite project.wikitolearn.org.conf
 RUN a2ensite pt.wikitolearn.org.conf
+RUN a2ensite sv.wikitolearn.org.conf
 RUN a2ensite aliases.conf
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
