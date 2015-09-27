@@ -36,29 +36,13 @@ ADD ./apache2/common/WikiToLearn.conf /etc/apache2/common/WikiToLearn.conf
 ADD ./apache2/common/www.WikiToLearn.org.conf /etc/apache2/common/www.WikiToLearn.org.conf
 ADD ./apache2/common/ssl.conf /etc/apache2/common/ssl.conf
 ADD ./apache2/mods-enabled/fastcgi.conf /etc/apache2/mods-enabled/fastcgi.conf
-ADD ./apache2/sites-available/fr.wikitolearn.org.conf /etc/apache2/sites-available/fr.wikitolearn.org.conf
-ADD ./apache2/sites-available/de.wikitolearn.org.conf /etc/apache2/sites-available/de.wikitolearn.org.conf
-ADD ./apache2/sites-available/project.wikitolearn.org.conf /etc/apache2/sites-available/project.wikitolearn.org.conf
-ADD ./apache2/sites-available/pool.wikitolearn.org.conf /etc/apache2/sites-available/pool.wikitolearn.org.conf
-ADD ./apache2/sites-available/it.wikitolearn.org.conf /etc/apache2/sites-available/it.wikitolearn.org.conf
-ADD ./apache2/sites-available/es.wikitolearn.org.conf /etc/apache2/sites-available/es.wikitolearn.org.conf
 ADD ./apache2/sites-available/000-wikitolearn.org.conf /etc/apache2/sites-available/000-wikitolearn.org.conf
-ADD ./apache2/sites-available/en.wikitolearn.org.conf /etc/apache2/sites-available/en.wikitolearn.org.conf
-ADD ./apache2/sites-available/aliases.conf /etc/apache2/sites-available/aliases.conf
-ADD ./apache2/sites-available/pt.wikitolearn.org.conf /etc/apache2/sites-available/pt.wikitolearn.org.conf
-ADD ./apache2/sites-available/sv.wikitolearn.org.conf /etc/apache2/sites-available/sv.wikitolearn.org.conf
+ADD ./apache2/sites-available/wikitolearn.org.conf /etc/apache2/sites-available/wikitolearn.org.conf
+ADD ./apache2/sites-available/zzz-aliases.conf /etc/apache2/sites-available/zzz-aliases.conf
 
 RUN a2ensite 000-wikitolearn.org.conf
-RUN a2ensite de.wikitolearn.org.conf
-RUN a2ensite en.wikitolearn.org.conf
-RUN a2ensite es.wikitolearn.org.conf
-RUN a2ensite fr.wikitolearn.org.conf
-RUN a2ensite it.wikitolearn.org.conf
-RUN a2ensite pool.wikitolearn.org.conf
-RUN a2ensite project.wikitolearn.org.conf
-RUN a2ensite pt.wikitolearn.org.conf
-RUN a2ensite sv.wikitolearn.org.conf
-RUN a2ensite aliases.conf
+RUN a2ensite wikitolearn.org.conf
+RUN a2ensite zzz-aliases.conf
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
 
