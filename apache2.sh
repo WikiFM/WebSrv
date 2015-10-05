@@ -1,8 +1,16 @@
 #!/bin/bash
 
-[[ "$UID" == "" ]] && UID=1000
-[[ "$GID" == "" ]] && GID=1000
-bindfs -m www-data --create-for-user=$UID --create-for-group=$GID /srv/ /var/www/
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+
+if [[ "$UID" != "" ]] ; then
+ if [[ "$GID" != "" ]] ; then
+  export APACHE_RUN_USER=www-data-dummy
+  export APACHE_RUN_GROUP=www-data-dummy
+  groupadd  -g $GID $APACHE_RUN_GROUP
+  useradd -g $GID -u $UID $APACHE_RUN_USER
+ fi
+fi
 
 if [ -f /certs/websrv.crt ] ; then
  echo "Copy /certs/websrv.crt"
@@ -12,6 +20,7 @@ if [ -f /certs/websrv.key ] ; then
  echo "Copy /certs/websrv.key"
  cp /certs/websrv.key /etc/ssl/private/apache.key
 fi
+chmod 755 /etc/ssl/certs/apache.crt /etc/ssl/private/apache.key
 
 if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  rm -f /etc/ssl/private/apache.key
@@ -25,8 +34,8 @@ if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  rm server.csr
 fi
 
-export APACHE_RUN_USER=www-data
-export APACHE_RUN_GROUP=www-data
+# export APACHE_RUN_USER=www-data
+# export APACHE_RUN_GROUP=www-data
 export APACHE_LOG_DIR=/var/log/apache2
 export APACHE_PID_FILE=/var/run/apache2.pid
 export APACHE_RUN_DIR=/var/run/apache2

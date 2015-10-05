@@ -17,7 +17,6 @@ RUN apt-get -y install libapache2-mod-fastcgi && rm -f /var/cache/apt/archives/*
 RUN apt-get -y install supervisor && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install php5-apcu && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install php5-mysql && rm -f /var/cache/apt/archives/*deb
-RUN apt-get -y install bindfs && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install build-essential && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb
