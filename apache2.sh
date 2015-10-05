@@ -1,15 +1,10 @@
 #!/bin/bash
 
-export APACHE_RUN_USER=www-data
-export APACHE_RUN_GROUP=www-data
-
-if [[ "$UID" != "" ]] ; then
- if [[ "$GID" != "" ]] ; then
-  export APACHE_RUN_USER=www-data-dummy
-  export APACHE_RUN_GROUP=www-data-dummy
-  groupadd  -g $GID $APACHE_RUN_GROUP
-  useradd -g $GID -u $UID $APACHE_RUN_USER
- fi
+if [[ "$USER_UID" != "" ]] ; then
+ usermod -u $USER_UID www-data
+fi
+if [[ "$USER_GID" != "" ]] ; then
+ groupmod -g $USER_GID www-data
 fi
 
 if [ -f /certs/websrv.crt ] ; then
@@ -34,8 +29,8 @@ if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  rm server.csr
 fi
 
-# export APACHE_RUN_USER=www-data
-# export APACHE_RUN_GROUP=www-data
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
 export APACHE_LOG_DIR=/var/log/apache2
 export APACHE_PID_FILE=/var/run/apache2.pid
 export APACHE_RUN_DIR=/var/run/apache2

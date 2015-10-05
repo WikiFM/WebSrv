@@ -45,8 +45,7 @@ RUN a2ensite zzz-aliases.conf
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 
 ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
