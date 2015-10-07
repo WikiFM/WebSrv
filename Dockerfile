@@ -6,8 +6,6 @@ RUN apt-get update
 RUN apt-get -y install zip unzip nano apt-utils curl rsync git && rm -f /var/cache/apt/archives/*deb
 
 ADD ./sources.list /etc/apt/
-ADD ./apache2.sh /root/
-ADD ./php5-fpm.sh /root/
 
 RUN apt-get update
 RUN apt-get -y install ocaml-nox && rm -f /var/cache/apt/archives/*deb
@@ -22,14 +20,11 @@ RUN apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb
 RUN apt-get clean
 
-RUN a2enmod rewrite ssl actions
 RUN rm /var/www/* -Rf
 RUN a2dissite 000-default.conf
 RUN rm -f /etc/apache2/sites-available/000-default.conf
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
-RUN chmod +x /root/apache2.sh
-RUN chmod +x /root/php5-fpm.sh
 
 ADD ./apache2/common/WikiToLearn.conf /etc/apache2/common/WikiToLearn.conf
 ADD ./apache2/common/www.WikiToLearn.org.conf /etc/apache2/common/www.WikiToLearn.org.conf
@@ -42,11 +37,17 @@ ADD ./apache2/sites-available/zzz-aliases.conf /etc/apache2/sites-available/zzz-
 RUN a2ensite 000-wikitolearn.org.conf
 RUN a2ensite wikitolearn.org.conf
 RUN a2ensite zzz-aliases.conf
+RUN a2enmod deflate rewrite ssl actions
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
 
 EXPOSE 80 443
 
+ADD ./kickstart.sh /
 ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-CMD ["/usr/bin/supervisord"]
+RUN chmod +x /kickstart.sh
+
+RUN sed -i -e '/pm.max_children =/ s/= .*/= 500/' /etc/php5/fpm/pool.d/www.conf
+
+CMD ["/kickstart.sh"]

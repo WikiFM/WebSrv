@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -f /var/run/php5-fpm.*
+
 if [[ "$USER_UID" != "" ]] ; then
  usermod -u $USER_UID www-data
 fi
@@ -15,7 +17,6 @@ if [ -f /certs/websrv.key ] ; then
  echo "Copy /certs/websrv.key"
  cp /certs/websrv.key /etc/ssl/private/apache.key
 fi
-chmod 755 /etc/ssl/certs/apache.crt /etc/ssl/private/apache.key
 
 if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  rm -f /etc/ssl/private/apache.key
@@ -29,10 +30,6 @@ if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  rm server.csr
 fi
 
-export APACHE_RUN_USER=www-data
-export APACHE_RUN_GROUP=www-data
-export APACHE_LOG_DIR=/var/log/apache2
-export APACHE_PID_FILE=/var/run/apache2.pid
-export APACHE_RUN_DIR=/var/run/apache2
-export APACHE_LOCK_DIR=/var/lock/apache2
-/usr/sbin/apache2 -D FOREGROUND
+chmod 755 /etc/ssl/certs/apache.crt /etc/ssl/private/apache.key
+
+/usr/bin/supervisord
