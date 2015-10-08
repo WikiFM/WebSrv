@@ -37,7 +37,7 @@ ADD ./apache2/sites-available/zzz-aliases.conf /etc/apache2/sites-available/zzz-
 RUN a2ensite 000-wikitolearn.org.conf
 RUN a2ensite wikitolearn.org.conf
 RUN a2ensite zzz-aliases.conf
-RUN a2enmod deflate rewrite ssl actions
+RUN a2enmod deflate rewrite ssl actions remoteip
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
 
@@ -49,5 +49,8 @@ ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /kickstart.sh
 
 RUN sed -i -e '/pm.max_children =/ s/= .*/= 500/' /etc/php5/fpm/pool.d/www.conf
+
+RUN echo "RemoteIPHeader X-Forwarded-For" >> /etc/apache2/apache2.conf
+RUN echo "RemoteIPInternalProxy 172.17.0.0/16" >> /etc/apache2/apache2.conf
 
 CMD ["/kickstart.sh"]
