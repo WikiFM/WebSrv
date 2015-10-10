@@ -1,0 +1,1 @@
+0 0 * * * root /var/www/WikiToLearn/lang-foreach.sh runJobs.php &> /dev/null

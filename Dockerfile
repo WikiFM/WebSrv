@@ -18,6 +18,7 @@ RUN apt-get -y install php5-mysql && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install build-essential && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb
 RUN apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb
+RUN apt-get -y install cron && rm -f /var/cache/apt/archives/*deb
 RUN apt-get clean
 
 RUN rm /var/www/* -Rf
@@ -40,6 +41,8 @@ RUN a2ensite zzz-aliases.conf
 RUN a2enmod deflate rewrite ssl actions remoteip
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
+
+ADD ./w2l-cron /etc/cron.d/w2l-cron
 
 EXPOSE 80 443
 
