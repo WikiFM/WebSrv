@@ -52,6 +52,8 @@ ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /kickstart.sh
 
 RUN sed -i -e '/pm.max_children =/ s/= .*/= 500/' /etc/php5/fpm/pool.d/www.conf
+RUN sed -i -e '/upload_max_filesize =/ s/= .*/= 10M/' /etc/php5/fpm/php.ini
+RUN sed -i -e '/post_max_size =/ s/= .*/= 32M/' /etc/php5/fpm/php.ini
 
 RUN echo "RemoteIPHeader X-Forwarded-For" >> /etc/apache2/apache2.conf
 RUN echo "RemoteIPInternalProxy 172.17.0.0/16" >> /etc/apache2/apache2.conf
