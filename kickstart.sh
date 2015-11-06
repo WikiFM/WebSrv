@@ -25,8 +25,8 @@ if [[ ! -f /etc/ssl/private/apache.key ]] ; then
  openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
  openssl rsa -passin pass:x -in server.pass.key -out /etc/ssl/private/apache.key
  rm server.pass.key
- openssl req -new -key /etc/ssl/private/apache.key -out server.csr -subj "/C=IT/ST=Italia/L=Milano/O=WikiToLearn/OU=IT Department/CN=www.wikitolearn.org"
- openssl x509 -req -days 365000 -in server.csr -signkey /etc/ssl/private/apache.key -out /etc/ssl/certs/apache.crt
+ openssl req -sha256 -new -key /etc/ssl/private/apache.key -out server.csr -subj "/C=IT/ST=Italia/L=Milano/O=WikiToLearn/OU=IT Department/CN=www.wikitolearn.org"
+ openssl x509 -sha256 -req -days 365000 -in server.csr -signkey /etc/ssl/private/apache.key -out /etc/ssl/certs/apache.crt
  rm server.csr
 fi
 
