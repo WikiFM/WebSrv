@@ -54,6 +54,8 @@ RUN sed -i -e '/upload_max_filesize =/ s/= .*/= 10M/' /etc/php5/fpm/php.ini
 RUN sed -i -e '/post_max_size =/ s/= .*/= 32M/' /etc/php5/fpm/php.ini
 
 RUN echo "RemoteIPHeader X-Forwarded-For" >> /etc/apache2/apache2.conf
-RUN echo "RemoteIPInternalProxy 172.17.0.0/16" >> /etc/apache2/apache2.conf
+RUN echo "RemoteIPInternalProxy 10.0.0.0/8" >> /etc/apache2/apache2.conf
+RUN echo "RemoteIPInternalProxy 172.16.0.0/12" >> /etc/apache2/apache2.conf
+RUN echo "RemoteIPInternalProxy 192.168.0.0/16" >> /etc/apache2/apache2.conf
 
 CMD ["/kickstart.sh"]
