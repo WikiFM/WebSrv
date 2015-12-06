@@ -59,3 +59,5 @@ RUN echo "RemoteIPInternalProxy 172.16.0.0/12" >> /etc/apache2/apache2.conf
 RUN echo "RemoteIPInternalProxy 192.168.0.0/16" >> /etc/apache2/apache2.conf
 
 CMD ["/kickstart.sh"]
+
+WORKDIR /var/www/WikiToLearn
