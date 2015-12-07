@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:8
 MAINTAINER wikitolearn sysadmin@wikitolearn.org
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
@@ -31,11 +31,9 @@ ADD ./apache2/common/cachedeflate.conf /etc/apache2/common/cachedeflate.conf
 ADD ./apache2/mods-enabled/fastcgi.conf /etc/apache2/mods-enabled/fastcgi.conf
 ADD ./apache2/sites-available/000-wikitolearn.org.conf /etc/apache2/sites-available/000-wikitolearn.org.conf
 ADD ./apache2/sites-available/wikitolearn.org.conf /etc/apache2/sites-available/wikitolearn.org.conf
-ADD ./apache2/sites-available/zzz-aliases.conf /etc/apache2/sites-available/zzz-aliases.conf
 
 RUN a2ensite 000-wikitolearn.org.conf
 RUN a2ensite wikitolearn.org.conf
-RUN a2ensite zzz-aliases.conf
 RUN a2enmod deflate rewrite ssl actions remoteip headers
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
