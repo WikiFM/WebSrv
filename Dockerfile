@@ -45,8 +45,10 @@ EXPOSE 80 443
 
 ADD ./kickstart.sh /
 ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD ./phpfpm.sh /phpfpm.sh
 
 RUN chmod +x /kickstart.sh
+RUN chmod +x /phpfpm.sh
 
 RUN sed -i -e '/pm.max_children =/ s/= .*/= 500/' /etc/php5/fpm/pool.d/www.conf
 RUN sed -i -e '/upload_max_filesize =/ s/= .*/= 10M/' /etc/php5/fpm/php.ini
