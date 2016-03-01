@@ -32,4 +32,4 @@ fi
 
 chmod 755 /etc/ssl/certs/apache.crt /etc/ssl/private/apache.key
 
-/usr/bin/supervisord
+exec /usr/bin/supervisord
