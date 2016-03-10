@@ -11,12 +11,13 @@ RUN apt-get update && apt-get -y install imagemagick && rm -f /var/cache/apt/arc
 RUN apt-get update && apt-get -y install inkscape && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
 RUN apt-get update && apt-get -y install apache2 libapache2-mod-fastcgi && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install php5-mysql php5-fpm php5-apcu php5-curl && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN apt-get update && apt-get -y install php5-mysql php5-fpm php5-apcu php5-curl libcurl4- && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
 RUN apt-get update && apt-get -y install supervisor && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
 RUN apt-get update && apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 RUN apt-get update && apt-get -y install cron && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN apt-get update && apt-get -y install libcurl4-openssl-dev && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
 RUN rm /var/www/* -Rf
 RUN a2dissite 000-default.conf
