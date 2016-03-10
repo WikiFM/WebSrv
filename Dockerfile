@@ -2,30 +2,25 @@ FROM debian:8
 MAINTAINER wikitolearn sysadmin@wikitolearn.org
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
+
 RUN apt-get update && apt-get -y install zip unzip nano apt-utils curl rsync git && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
 ADD ./sources.list /etc/apt/
 
-RUN apt-get update && apt-get -y install ocaml-nox && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install apache2 && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install php5-fpm && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install libapache2-mod-fastcgi && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install supervisor && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install php5-apcu && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install php5-mysql && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install build-essential && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 RUN apt-get update && apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install cron && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 RUN apt-get update && apt-get -y install inkscape && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install php5-curl && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
+RUN apt-get update && apt-get -y install apache2 libapache2-mod-fastcgi && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN apt-get update && apt-get -y install php5-mysql php5-fpm php5-apcu php5-curl && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+
+RUN apt-get update && apt-get -y install supervisor && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+
+RUN apt-get update && apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN apt-get update && apt-get -y install cron && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
 RUN rm /var/www/* -Rf
 RUN a2dissite 000-default.conf
 RUN rm -f /etc/apache2/sites-available/000-default.conf
-RUN curl -sS https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/bin/composer
 
 ADD ./apache2/common/WikiToLearn.conf /etc/apache2/common/WikiToLearn.conf
 ADD ./apache2/common/www.WikiToLearn.org.conf /etc/apache2/common/www.WikiToLearn.org.conf
