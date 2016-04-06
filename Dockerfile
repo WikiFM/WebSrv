@@ -19,6 +19,8 @@ RUN apt-get update && apt-get -y install ssmtp && rm -f /var/cache/apt/archives/
 RUN apt-get update && apt-get -y install cron && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 RUN apt-get update && apt-get -y install libcurl4-openssl-dev && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
+RUN apt-get update && apt-get -y install logrotate && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+
 RUN rm /var/www/* -Rf
 RUN a2dissite 000-default.conf
 RUN rm -f /etc/apache2/sites-available/000-default.conf

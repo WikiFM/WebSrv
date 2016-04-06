@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t wikitolearn/websrv:0.12.1 .
+docker build -t wikitolearn/websrv:0.12.2 .
