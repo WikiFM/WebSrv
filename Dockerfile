@@ -39,8 +39,6 @@ RUN a2enmod deflate rewrite ssl actions remoteip headers
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
 
-ADD ./w2l-cron /etc/cron.d/w2l-cron
-
 EXPOSE 80 443
 
 ADD ./kickstart.sh /
@@ -54,10 +52,7 @@ RUN sed -i -e '/pm.max_children =/ s/= .*/= 500/' /etc/php5/fpm/pool.d/www.conf
 RUN sed -i -e '/upload_max_filesize =/ s/= .*/= 10M/' /etc/php5/fpm/php.ini
 RUN sed -i -e '/post_max_size =/ s/= .*/= 32M/' /etc/php5/fpm/php.ini
 
-RUN echo "RemoteIPHeader X-Forwarded-For" >> /etc/apache2/apache2.conf
-RUN echo "RemoteIPInternalProxy 10.0.0.0/8" >> /etc/apache2/apache2.conf
-RUN echo "RemoteIPInternalProxy 172.16.0.0/12" >> /etc/apache2/apache2.conf
-RUN echo "RemoteIPInternalProxy 192.168.0.0/16" >> /etc/apache2/apache2.conf
+ADD ./apache2.conf /etc/apache2/apache2.conf
 
 CMD ["/kickstart.sh"]
 
