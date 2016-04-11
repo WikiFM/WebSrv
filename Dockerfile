@@ -1,11 +1,11 @@
 FROM debian:8
+ADD ./sources.list /etc/apt/sources.list
+
 MAINTAINER wikitolearn sysadmin@wikitolearn.org
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 RUN apt-get update && apt-get -y install zip unzip nano apt-utils curl rsync git && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-
-ADD ./sources.list /etc/apt/
 
 RUN apt-get update && apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 RUN apt-get update && apt-get -y install inkscape && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
