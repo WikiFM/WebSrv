@@ -29,6 +29,7 @@ RUN apt-get update && apt-get -y install logrotate && rm -f /var/cache/apt/archi
 RUN rm /var/www/* -Rf
 
 RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
+RUN sed -i '/hostname=/d' /etc/ssmtp/ssmtp.conf
 
 EXPOSE 80 443
 
@@ -37,9 +38,15 @@ ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN chmod +x /kickstart.sh
 
-ADD ./nginx.conf /etc/nginx/nginx.conf
+ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./nginx/snippets/wikitolearn-certs.conf /etc/nginx/snippets/wikitolearn-certs.conf
 ADD ./nginx/sites-available/default /etc/nginx/sites-available/default
+ADD ./nginx/sites-available/mediawiki /etc/nginx/sites-available/mediawiki
+
+RUN sed -i 's/server_name/host/g' /etc/nginx/fastcgi_params
+RUN sed -i '/hhvm\./d' /etc/hhvm/php.ini
+
+RUN ln -s /etc/nginx/sites-available/mediawiki /etc/nginx/sites-enabled/
 
 CMD ["/kickstart.sh"]
 
