@@ -1,0 +1,25 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	# SSL configuration
+	#
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+	include snippets/wikitolearn-certs.conf;
+    include hhvm.conf;
+
+	root /var/www/WikiToLearn/static/;
+	index index.php;
+
+	server_name _;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+	location ~ /\.ht {
+		deny all;
+	}
+}
