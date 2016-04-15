@@ -1,0 +1,13 @@
+/var/log/webserver/*.log {
+	weekly
+	missingok
+	rotate 52
+	compress
+	delaycompress
+	notifempty
+	create 0640 www-data adm
+	sharedscripts
+	postrotate
+		/websrv-post-script.sh
+	endscript
+}

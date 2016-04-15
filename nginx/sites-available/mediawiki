@@ -49,6 +49,6 @@ server {
         expires max;
     }
 
-    access_log /var/log/nginx/mediawiki-access.log;
-    error_log /var/log/nginx/mediawiki-error.log;
+    access_log /var/log/webserver/mediawiki-access.log;
+    error_log /var/log/webserver/mediawiki-error.log;
 }
