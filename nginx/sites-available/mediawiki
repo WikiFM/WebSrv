@@ -23,6 +23,27 @@ server {
         rewrite ^/(.*)$ /index.php?title=$1&$args;
     }
 
+    # disallow cache access
+    location ^~ /cache/ { deny all; }
+
+    # diallow access to hidden files
+    location ~ /\. { access_log off; log_not_found off; deny all; }
+
+    # disallow direct access to this paths
+    location ^~ /bin/ { internal; }
+    location ^~ /docs/ { internal; }
+    location ^~ /includes/ { internal; }
+    location ^~ /maintenance/ { internal; }
+    location ^~ /resources/ { internal; }
+    location ^~ /serialized/ { internal; }
+    location ^~ /tests/ { internal; }
+
+    # prevent injection in the images dir
+    location ~* ^/images/.*.(html|htm|shtml|php)$ {
+        types { }
+        default_type text/plain;
+    }
+
     location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
         try_files $uri /index.php;
         expires max;

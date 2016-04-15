@@ -42,9 +42,10 @@ ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./nginx/snippets/wikitolearn-certs.conf /etc/nginx/snippets/wikitolearn-certs.conf
 ADD ./nginx/sites-available/default /etc/nginx/sites-available/default
 ADD ./nginx/sites-available/mediawiki /etc/nginx/sites-available/mediawiki
+RUN sed -i 's/server_name/host/g' /etc/nginx/fastcgi_params # fix the hostname in nginx
 
-RUN sed -i 's/server_name/host/g' /etc/nginx/fastcgi_params
-RUN sed -i '/hhvm\./d' /etc/hhvm/php.ini
+ADD ./hhvm/server.ini /etc/hhvm/server.ini
+ADD ./hhvm/php.ini    /etc/hhvm/php.ini
 
 RUN ln -s /etc/nginx/sites-available/mediawiki /etc/nginx/sites-enabled/
 
