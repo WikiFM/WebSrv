@@ -49,6 +49,8 @@ ADD ./hhvm/php.ini    /etc/hhvm/php.ini
 
 RUN ln -s /etc/nginx/sites-available/mediawiki /etc/nginx/sites-enabled/
 
+RUN mkdir /var/log/webserver/
+
 ADD ./logrotate/websrv  /etc/logrotate.d/
 ADD ./logrotate/websrv-post-script.sh /websrv-post-script.sh
 RUN chmod +x /websrv-post-script.sh
