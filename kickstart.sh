@@ -30,4 +30,8 @@ fi
 
 chmod 755 /etc/ssl/certs/websrv.crt /etc/ssl/private/websrv.key
 
+chown www-data: /var/log/hhvm -R
+chown www-data: /var/run/hhvm/ -R
+chown www-data: /var/log/nginx -R
+
 exec /usr/bin/supervisord
