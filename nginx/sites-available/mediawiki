@@ -5,7 +5,6 @@ server {
     listen [::]:443 ssl;
 
     include snippets/wikitolearn-certs.conf;
-    include hhvm.conf;
 
     server_name it.* de.* en.* es.* fr.* pt.* sv.* meta.* pool.*;
 
@@ -48,6 +47,8 @@ server {
         try_files $uri /index.php;
         expires max;
     }
+
+    include hhvm.conf;
 
     access_log /var/log/webserver/mediawiki-access.log;
     error_log /var/log/webserver/mediawiki-error.log;
