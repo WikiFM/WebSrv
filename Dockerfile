@@ -7,7 +7,18 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 RUN apt-get update && apt-get -y install zip unzip nano apt-utils curl rsync git && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 
-RUN curl -O http://repo.mysql.com/mysql-apt-config_0.1.5-1debian7_all.deb && dpkg -i mysql-apt-config_0.1.5-1debian7_all.deb && rm -v mysql-apt-config_0.1.5-1debian7_all.deb && apt-get update && apt-get -y install mysql-client && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN apt-get update && apt-get -y install lsb-release && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+
+RUN echo mysql-apt-config mysql-apt-config/enable-repo select mysql-5.7-dmr | debconf-set-selections ; \
+ curl -O http://repo.mysql.com/mysql-apt-config_0.3.5-1debian8_all.deb && \
+ dpkg -i mysql-apt-config* && \
+ rm -v mysql-apt-config* && \
+ apt-get update && \
+ apt-get dist-upgrade -y mysql-apt-config && \
+ apt-get update && \
+ apt-get -y install mysql-community-client && \
+ rm -f /var/cache/apt/archives/*deb && \
+ find /var/lib/apt/lists/ -type f -delete
 
 RUN apt-get update && apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
 RUN apt-get update && apt-get -y install inkscape && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
@@ -28,8 +39,7 @@ RUN apt-get update && apt-get -y install logrotate && rm -f /var/cache/apt/archi
 
 RUN rm /var/www/* -Rf
 
-RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf
-RUN sed -i '/hostname=/d' /etc/ssmtp/ssmtp.conf
+RUN sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf && sed -i '/hostname=/d' /etc/ssmtp/ssmtp.conf
 
 EXPOSE 80 443
 
