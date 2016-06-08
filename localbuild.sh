@@ -1,2 +1,4 @@
 #!/bin/bash
-docker build -t wikitolearn/websrv:0.14.5 .
+cd $(dirname "$(readlink -f $0)")
+docker build -t wikitolearn/websrv:0.14.6 .
+
