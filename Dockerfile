@@ -1,42 +1,46 @@
 FROM debian:8
+ADD ./docker-apt-get-install.sh /docker-apt-get-install.sh
 ADD ./sources.list /etc/apt/sources.list
 
 MAINTAINER wikitolearn sysadmin@wikitolearn.org
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-RUN apt-get update && apt-get -y install zip unzip nano apt-utils curl rsync git && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh zip
+RUN /docker-apt-get-install.sh unzip
+RUN /docker-apt-get-install.sh nano
+RUN /docker-apt-get-install.sh apt-utils
+RUN /docker-apt-get-install.sh curl
+RUN /docker-apt-get-install.sh rsync
+RUN /docker-apt-get-install.sh git
 
-RUN apt-get update && apt-get -y install lsb-release && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh lsb-release
 
 RUN echo mysql-apt-config mysql-apt-config/enable-repo select mysql-5.7-dmr | debconf-set-selections ; \
  curl -O http://repo.mysql.com/mysql-apt-config_0.3.5-1debian8_all.deb && \
  dpkg -i mysql-apt-config* && \
  rm -v mysql-apt-config* && \
  apt-get update && \
- apt-get dist-upgrade -y mysql-apt-config && \
+ /docker-apt-get-install.sh mysql-apt-config && \
  apt-get update && \
- apt-get -y install mysql-community-client && \
- rm -f /var/cache/apt/archives/*deb && \
- find /var/lib/apt/lists/ -type f -delete
+ /docker-apt-get-install.sh mysql-community-client
 
-RUN apt-get update && apt-get -y install imagemagick && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install inkscape && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh imagemagick
+RUN /docker-apt-get-install.sh inkscape
 
-RUN apt-get update && apt-get -y install nginx && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh nginx
 RUN curl -sSL http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
 RUN echo deb http://dl.hhvm.com/debian jessie main | tee /etc/apt/sources.list.d/hhvm.list
-RUN apt-get update && apt-get -y install hhvm && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-# RUN apt-get update && apt-get -y install php5-mysqlnd php5-fpm php5-apcu php5-curl libcurl4-openssl-dev && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh hhvm
 
-RUN apt-get update && apt-get -y install supervisor && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh supervisor
 
-RUN apt-get update && apt-get -y install ssmtp && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete && \
+RUN /docker-apt-get-install.sh ssmtp && \
  sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf && sed -i '/hostname=/d' /etc/ssmtp/ssmtp.conf
-RUN apt-get update && apt-get -y install cron && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
-RUN apt-get update && apt-get -y install libcurl4-openssl-dev && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh cron
+RUN /docker-apt-get-install.sh libcurl4-openssl-dev
 
-RUN apt-get update && apt-get -y install logrotate && rm -f /var/cache/apt/archives/*deb && find /var/lib/apt/lists/ -type f -delete
+RUN /docker-apt-get-install.sh logrotate
 
 RUN rm /var/www/* -Rf
 
