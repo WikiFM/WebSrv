@@ -1,6 +1,6 @@
 FROM debian:8
 ADD ./docker-apt-get-install.sh /docker-apt-get-install.sh
-ADD ./apt/sources.list /etc/apt/sources.list
+ADD ./etc/apt/sources.list /etc/apt/sources.list
 
 MAINTAINER wikitolearn sysadmin@wikitolearn.org
 ENV DEBIAN_FRONTEND noninteractive
