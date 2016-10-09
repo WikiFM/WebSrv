@@ -8,6 +8,6 @@
 	create 0640 www-data adm
 	sharedscripts
 	postrotate
-		/websrv-post-script.sh
+		/opt/websrv-post-script.sh
 	endscript
 }

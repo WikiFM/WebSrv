@@ -6,7 +6,7 @@ server {
 
     include snippets/wikitolearn-certs.conf;
 
-    server_name it.* de.* en.* es.* fr.* pt.* sv.* meta.* pool.* ca.*;
+    server_name it.* de.* en.* es.* fr.* pt.* sv.* ca.* meta.* pool.*;
 
     root /var/www/WikiToLearn/mediawiki;
     index index.php;

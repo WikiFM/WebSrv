@@ -1,6 +1,6 @@
 FROM debian:8
 ADD ./docker-apt-get-install.sh /docker-apt-get-install.sh
-ADD ./sources.list /etc/apt/sources.list
+ADD ./apt/sources.list /etc/apt/sources.list
 
 MAINTAINER wikitolearn sysadmin@wikitolearn.org
 ENV DEBIAN_FRONTEND noninteractive
@@ -37,37 +37,28 @@ RUN /docker-apt-get-install.sh supervisor
 
 RUN /docker-apt-get-install.sh ssmtp && \
  sed -i 's/#FromLineOverride=YES/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf && sed -i '/hostname=/d' /etc/ssmtp/ssmtp.conf
-RUN /docker-apt-get-install.sh cron
 RUN /docker-apt-get-install.sh libcurl4-openssl-dev
 
 RUN /docker-apt-get-install.sh logrotate
+RUN /docker-apt-get-install.sh cron
 
 RUN rm /var/www/* -Rf
 
 EXPOSE 80 443
 
 ADD ./kickstart.sh /
-ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD ./etc/ /etc/
+ADD ./opt/ /opt/
 
 RUN chmod +x /kickstart.sh
 
-ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
-ADD ./nginx/snippets/wikitolearn-certs.conf /etc/nginx/snippets/wikitolearn-certs.conf
-ADD ./nginx/sites-available/default /etc/nginx/sites-available/default
-ADD ./nginx/sites-available/mediawiki /etc/nginx/sites-available/mediawiki
 RUN sed -i 's/server_name/host/g' /etc/nginx/fastcgi_params # fix the hostname in nginx
-
-ADD ./hhvm/server.ini /etc/hhvm/server.ini
-ADD ./hhvm/php.ini    /etc/hhvm/php.ini
 
 RUN ln -s /etc/nginx/sites-available/mediawiki /etc/nginx/sites-enabled/
 
 RUN mkdir /var/log/webserver/
 RUN mkdir /var/log/mediawiki/
-
-ADD ./logrotate/websrv  /etc/logrotate.d/
-ADD ./logrotate/websrv-post-script.sh /websrv-post-script.sh
-RUN chmod +x /websrv-post-script.sh
+RUN chmod +x /opt/websrv-post-script.sh
 
 CMD ["/kickstart.sh"]
 

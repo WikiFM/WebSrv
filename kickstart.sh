@@ -28,7 +28,7 @@ if [[ ! -f /etc/ssl/private/websrv.key ]] ; then
  rm server.csr
 fi
 
-chmod 755 /etc/ssl/certs/websrv.crt /etc/ssl/private/websrv.key
+chmod 750 /etc/ssl/certs/websrv.crt /etc/ssl/private/websrv.key
 
 chown www-data: /var/log/hhvm -R
 chown www-data: /var/run/hhvm/ -R
@@ -36,4 +36,10 @@ chown www-data: /var/log/nginx -R
 chown www-data: /var/www/
 chown www-data: /var/log/mediawiki/
 
-exec /usr/bin/supervisord
+#if [[ "$WTL_PRODUCTION" == "1" ]] # segmentation fault whit this code
+#then
+#    echo "Building hhvm hhbc file"
+#    su -s /bin/bash -c "hhvm --hphp -t hhbc --output-dir /var/run/hhvm/ --input-dir /var/www/" www-data
+#fi
+
+exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
