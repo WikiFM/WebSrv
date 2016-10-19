@@ -42,4 +42,42 @@ chown www-data: /var/log/mediawiki/
 #    su -s /bin/bash -c "hhvm --hphp -t hhbc --output-dir /var/run/hhvm/ --input-dir /var/www/" www-data
 #fi
 
+if [[ "$HHVM_NUM_WORKERS" == "" ]]
+then
+    HHVM_NUM_WORKERS=1
+fi
+HHVM_BASE_PORT=9000
+HHVM_PORT=$HHVM_BASE_PORT
+
+while [[ $HHVM_PORT -lt $(($HHVM_BASE_PORT+$HHVM_NUM_WORKERS)) ]]
+do
+    cat <<EOF > /etc/hhvm/server-$HHVM_PORT.ini
+pid = /var/run/hhvm/pid-$HHVM_PORT
+hhvm.server.port = $HHVM_PORT
+hhvm.log.file = /var/log/hhvm/error-$HHVM_PORT.log
+hhvm.pid_file = /var/run/hhvm/pid-hhvm-$HHVM_PORT
+hhvm.repo.central.path = /var/run/hhvm/hhvm-$HHVM_PORT.hhbc
+EOF
+
+    cat <<EOF > /etc/supervisor/conf.d/hhvm-$HHVM_PORT.conf
+[program:hhvm-$HHVM_PORT]
+environment=WTL_PRODUCTION=%(ENV_WTL_PRODUCTION)s
+user=www-data
+group=www-data
+command=hhvm --mode server --config /etc/hhvm/php.ini --config /etc/hhvm/shared.ini --config /etc/hhvm/server-$HHVM_PORT.ini
+EOF
+    HHVM_PORT=$(($HHVM_PORT+1))
+done
+
+HHVM_PORT=$HHVM_BASE_PORT
+{
+echo 'upstream upstream-hhvm {'
+while [[ $HHVM_PORT -lt $(($HHVM_BASE_PORT+$HHVM_NUM_WORKERS)) ]]
+do
+echo ' server 127.0.0.1:'$HHVM_PORT';'
+      HHVM_PORT=$(($HHVM_PORT+1))
+done
+echo '}'
+} > /etc/nginx/upstream-hhvm.conf
+
 exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
