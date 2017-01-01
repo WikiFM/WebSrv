@@ -1,3 +1,3 @@
 #!/bin/bash
 cd $(dirname "$(readlink -f $0)")
-docker build -t wikitolearn/websrv:0.17.2 .
+docker build -t wikitolearn/websrv:0.17.3 .

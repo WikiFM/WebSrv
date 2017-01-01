@@ -41,6 +41,7 @@ RUN /docker-apt-get-install.sh libcurl4-openssl-dev
 
 RUN /docker-apt-get-install.sh logrotate
 RUN /docker-apt-get-install.sh cron
+RUN /docker-apt-get-install.sh anacron
 
 RUN rm /var/www/* -Rf
 
