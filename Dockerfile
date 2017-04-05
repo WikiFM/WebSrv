@@ -16,8 +16,9 @@ RUN /docker-apt-get-install.sh git
 
 RUN /docker-apt-get-install.sh lsb-release
 
+RUN apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5
 RUN echo mysql-apt-config mysql-apt-config/enable-repo select mysql-5.7-dmr | debconf-set-selections ; \
- curl -O http://repo.mysql.com/mysql-apt-config_0.3.5-1debian8_all.deb && \
+ curl -O https://repo.mysql.com/mysql-apt-config_0.3.7-1debian8_all.deb && \
  dpkg -i mysql-apt-config* && \
  rm -v mysql-apt-config* && \
  apt-get update && \
