@@ -1,25 +1,36 @@
-server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	listen 443 ssl default_server;
-	listen [::]:443 ssl default_server;
+server
+{
+  listen 80 default_server;
+  listen [::]:80 default_server;
+  listen 443 ssl default_server;
+  listen [::]:443 ssl default_server;
 
-	include snippets/wikitolearn-certs.conf;
-    include hhvm.conf;
+  include snippets/wikitolearn-certs.conf;
+  include hhvm.conf;
 
-	root /var/www/WikiToLearn/static/;
-	index index.php;
+  root /var/www/WikiToLearn/static/;
+  index index.php;
 
-	server_name _;
+  server_name _;
 
-    location / {
-        try_files $uri $uri/ /index.php?$args;
-    }
+  location /assets/
+  {
+    access_log off;
+    add_header Cache-Control public;
+		expires max;
+    try_files $uri $uri/ /index.php?$args;
+  }
 
-	location ~ /\.ht {
-		deny all;
-	}
+  location /
+  {
+    try_files $uri $uri/ /index.php?$args;
+  }
 
-    access_log /var/log/webserver/default-access.log;
-    error_log /var/log/webserver/default-error.log;
+  location ~ /\.ht
+  {
+    deny all;
+  }
+
+  access_log /var/log/webserver/default-access.log;
+  error_log /var/log/webserver/default-error.log;
 }
