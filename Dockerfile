@@ -48,6 +48,7 @@ RUN /docker-apt-get-install.sh php-opcache
 RUN /docker-apt-get-install.sh php-intl
 RUN /docker-apt-get-install.sh php-apcu
 RUN /docker-apt-get-install.sh php-xml
+RUN /docker-apt-get-install.sh php-curl
 
 RUN rm /var/www/* -Rf
 
