@@ -6,7 +6,7 @@ server
   listen [::]:443 ssl default_server;
 
   include snippets/wikitolearn-certs.conf;
-  include hhvm.conf;
+  include php.conf;
 
   root /var/www/WikiToLearn/static/;
   index index.php;

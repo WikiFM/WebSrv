@@ -82,7 +82,7 @@ server
     expires max;
   }
 
-  include hhvm.conf;
+  include php.conf;
 
   access_log /var/log/webserver/mediawiki-access.log;
   error_log /var/log/webserver/mediawiki-error.log;
