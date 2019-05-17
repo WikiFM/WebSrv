@@ -1,1 +1,1 @@
-0 * * * * root find /var/log/mediawiki/ -type f -cmin 60 -delete
+0 * * * * root find /var/log/mediawiki/ -type f -mtime +7  -delete
