@@ -20,12 +20,7 @@ if [[ ! -f /etc/ssl/private/websrv.key ]] ; then
  rm -f /etc/ssl/private/websrv.key
  rm -f /etc/ssl/certs/websrv.crt
 
- openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
- openssl rsa -passin pass:x -in server.pass.key -out /etc/ssl/private/websrv.key
- rm server.pass.key
- openssl req -sha256 -new -key /etc/ssl/private/websrv.key -out server.csr -subj "/C=IT/ST=Italia/L=Milano/O=WikiToLearn/OU=IT Department/CN=www.wikitolearn.org"
- openssl x509 -sha256 -req -days 365000 -in server.csr -signkey /etc/ssl/private/websrv.key -out /etc/ssl/certs/websrv.crt
- rm server.csr
+ openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/ssl/private/websrv.key -out /etc/ssl/certs/websrv.crt -subj "/CN=www.wikitolearn.org"
 fi
 
 chmod 750 /etc/ssl/certs/websrv.crt /etc/ssl/private/websrv.key
